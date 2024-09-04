@@ -1,5 +1,5 @@
 .timetable {
-  @apply w-full table-auto border-collapse text-primary;
+  @apply w-full table-fixed border-collapse text-primary;
 }
 
 .timetable,
@@ -13,5 +13,5 @@
 }
 
 .timetable td {
-  @apply h-8;
+  @apply p-2;
 }
