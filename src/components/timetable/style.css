@@ -1,0 +1,17 @@
+.timetable {
+  @apply w-full table-auto border-collapse text-primary;
+}
+
+.timetable,
+.timetable th,
+.timetable td {
+  @apply border border-border;
+}
+
+.timetable th {
+  @apply bg-surface p-2;
+}
+
+.timetable td {
+  @apply h-8;
+}

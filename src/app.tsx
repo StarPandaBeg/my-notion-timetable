@@ -1,14 +1,18 @@
-import { useState } from "preact/hooks";
 import "./app.css";
+import { get } from "./api/config";
+import { Timetable } from "./components/timetable";
+import { useQuery } from "preact-fetching";
 
 export function App() {
-  const [count, setCount] = useState(0);
+  const { isLoading, isError, data: config } = useQuery("config", () => get());
+
+  if (isError) return <></>;
+  if (isLoading) return <></>;
+  if (config == undefined) return <></>;
 
   return (
     <>
-      <h1>Hello, World!</h1>
-      <p>{count}</p>
-      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <Timetable config={config!} />
     </>
   );
 }
