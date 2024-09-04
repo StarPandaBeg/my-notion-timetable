@@ -13,7 +13,7 @@ export function App() {
 
   return (
     <div className="grid grid-cols-[2fr_1fr] gap-4">
-      <Timetable config={config!} />
+      <Timetable />
       <LessonInfo config={config!} />
     </div>
   );

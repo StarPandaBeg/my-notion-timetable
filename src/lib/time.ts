@@ -22,7 +22,7 @@ function getNextWeekday(date: Date): Date {
   return nextWeekday;
 }
 
-function weekFromLastSeptember() {
+export function weekFromLastSeptember() {
   const date = new Date();
   const startOfThisSeptember = getNextWeekday(
     new Date(date.getFullYear(), 8, 1)
@@ -72,9 +72,9 @@ export function isInRange(seconds: number, range: TimeRange) {
   return seconds >= range.from && seconds <= range.to;
 }
 
-export function isEvenWeek() {
-  const weekNumber = weekFromLastSeptember() + 1;
-  return weekNumber % 2 == 0;
+export function isEvenWeek(weekNumber?: number) {
+  const resultWeekNumber = (weekNumber ?? weekFromLastSeptember()) + 1;
+  return resultWeekNumber % 2 == 0;
 }
 
 export function formatDuration(seconds: number) {

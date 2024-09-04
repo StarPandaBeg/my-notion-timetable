@@ -1,13 +1,14 @@
-import { CSSProperties, HTMLAttributes } from "preact/compat";
-import { Config, type Timetable } from "../../types/config.type";
+import { CSSProperties, HTMLAttributes, useMemo } from "preact/compat";
 import { buildTimetableArray, TimetableArray } from "./util";
 import { cn } from "../../lib/util";
 import {
   getDayFromMonday,
-  isEvenWeek,
   isInRange,
   secondsFromMidnight,
+  weekFromLastSeptember,
 } from "../../lib/time";
+import { useTimetable } from "../../hooks/use-timetable";
+import { useTheme } from "../../hooks/use-theme";
 
 import "./style.css";
 
@@ -20,10 +21,6 @@ interface TimetableRowProps {
 interface TimetableCellProps extends HTMLAttributes<HTMLTableCellElement> {
   cell: TimetableArray[0][0];
   isHeader: boolean;
-}
-
-export interface TimetableProps {
-  config: Config;
 }
 
 const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница"];
@@ -57,9 +54,14 @@ function TimetableCell({
   className,
   ...props
 }: TimetableCellProps) {
+  const theme = useTheme();
+
   const resultClassName = cn("divide-y-2 divide-border", className);
   const style = {
-    color: cell.color,
+    color:
+      theme.lessonColors.length > cell.type
+        ? theme.lessonColors[cell.type]
+        : null,
   } satisfies CSSProperties;
 
   if (isHeader)
@@ -75,10 +77,14 @@ function TimetableCell({
   );
 }
 
-export function Timetable({ config }: TimetableProps) {
-  const timetable = isEvenWeek() ? config.timetable.even : config.timetable.odd;
-  const timetableArray = buildTimetableArray(config, timetable);
-  const timeRanges = config.time;
+export function Timetable() {
+  const weekIndex = weekFromLastSeptember();
+  const timetable = useTimetable(weekIndex);
+
+  const timetableArray = useMemo(
+    () => buildTimetableArray(timetable),
+    [timetable]
+  );
 
   const date = new Date();
   const dayOfWeek = new Date().getDay();
@@ -102,7 +108,7 @@ export function Timetable({ config }: TimetableProps) {
             row={row}
             highlightCell={dayOfWeek > 0 ? dayOfWeek : -1}
             highlightClass={
-              isInRange(seconds, timeRanges[index])
+              isInRange(seconds, timetable.time[index])
                 ? "bg-white/[0.05]"
                 : "bg-white/[0.02]"
             }
