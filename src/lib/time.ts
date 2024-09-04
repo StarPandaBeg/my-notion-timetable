@@ -76,3 +76,24 @@ export function isEvenWeek() {
   const weekNumber = weekFromLastSeptember() + 1;
   return weekNumber % 2 == 0;
 }
+
+export function formatDuration(seconds: number) {
+  if (seconds < 0) throw Error("Value shouldn't be negative");
+
+  const h = Math.trunc(seconds / 3600);
+  const m = Math.trunc(seconds / 60) - h * 60;
+  if (h == 0 && m == 0) return "меньше минуты";
+
+  let mSuffix = "";
+  if (m % 10 > 1 && m % 10 < 5) mSuffix = "ы";
+  if (m % 10 == 1 && m != 11) mSuffix = "а";
+
+  if (h > 0) {
+    let suffix = "а";
+    if (h % 10 == 1) suffix = "";
+    if (h % 10 >= 5) suffix = "ов";
+
+    return `${h} час${suffix} ${m} минут${mSuffix}`;
+  }
+  return `${m} минут${mSuffix}`;
+}

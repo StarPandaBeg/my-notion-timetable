@@ -13,6 +13,8 @@ export default {
         surface: "#2f2f2f",
         border: "#212121",
         primary: "#cccccc",
+        secondary: "#999999",
+        muted: "#555555",
       },
     },
   },
