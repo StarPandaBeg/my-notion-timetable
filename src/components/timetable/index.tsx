@@ -82,7 +82,7 @@ export function Timetable({ config }: TimetableProps) {
 
   const date = new Date();
   const dayOfWeek = new Date().getDay();
-  const seconds = secondsFromMidnight(new Date(2024, 8, 4, 12));
+  const seconds = secondsFromMidnight(new Date());
 
   return (
     <table className="timetable">
