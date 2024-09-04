@@ -10,8 +10,8 @@ export interface TimetableEntry {
   type: number;
 }
 
-export type TimetableRow = TimetableEntry[];
-export type Timetable = TimetableRow[];
+export type TimetableColumn = TimetableEntry[];
+export type Timetable = TimetableColumn[];
 
 export interface Timetables {
   even: Timetable;
