@@ -43,6 +43,18 @@ function weekFromLastSeptember() {
   return Math.ceil(diffInDays / 7);
 }
 
+export function getDayFromMonday(date: Date, offset: number = 0): string {
+  const dayOfWeek = date.getDay();
+  const dayOfWeekMondayBased = (dayOfWeek + 6) % 7;
+  const targetDate = new Date(date);
+  targetDate.setDate(date.getDate() - dayOfWeekMondayBased + offset);
+
+  const day = String(targetDate.getDate()).padStart(2, "0");
+  const month = String(targetDate.getMonth() + 1).padStart(2, "0");
+
+  return `${day}.${month}`;
+}
+
 export function toSeconds(h: number, m: number = 0) {
   return h * 3600 + m * 60;
 }

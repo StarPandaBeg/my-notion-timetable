@@ -2,7 +2,12 @@ import { CSSProperties, HTMLAttributes } from "preact/compat";
 import { Config, type Timetable } from "../../types/config.type";
 import { buildTimetableArray, TimetableArray } from "./util";
 import { cn } from "../../lib/util";
-import { isEvenWeek, isInRange, secondsFromMidnight } from "../../lib/time";
+import {
+  getDayFromMonday,
+  isEvenWeek,
+  isInRange,
+  secondsFromMidnight,
+} from "../../lib/time";
 
 import "./style.css";
 
@@ -20,6 +25,8 @@ interface TimetableCellProps extends HTMLAttributes<HTMLTableCellElement> {
 export interface TimetableProps {
   config: Config;
 }
+
+const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница"];
 
 function TimetableRow({
   row,
@@ -73,6 +80,7 @@ export function Timetable({ config }: TimetableProps) {
   const timetableArray = buildTimetableArray(config, timetable);
   const timeRanges = config.time;
 
+  const date = new Date();
   const dayOfWeek = new Date().getDay();
   const seconds = secondsFromMidnight(new Date(2024, 8, 4, 12));
 
@@ -81,11 +89,11 @@ export function Timetable({ config }: TimetableProps) {
       <thead>
         <tr>
           <th className={"w-40"}></th>
-          <th>Понедельник</th>
-          <th>Вторник</th>
-          <th>Среда</th>
-          <th>Четверг</th>
-          <th>Пятница</th>
+          {days.map((day, index) => (
+            <th>
+              {day} - {getDayFromMonday(date, index)}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
