@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "preact": "^10.23.1"
+    "postcss": "^8.4.45",
+    "preact": "^10.23.1",
+    "preact-fetching": "^1.0.0",
+    "tailwindcss": "^3.4.10"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.0",
